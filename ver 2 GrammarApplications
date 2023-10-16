@@ -52,11 +52,13 @@ public class GrammarApplications {
 
     // start of functions ----------------------------------------------------------------------------------------------------------------------------------------
     // for Semi Colon
-    public static String semiColonChecker(String assignment) {
+    public static boolean semiColonChecker(String assignment) {
         if (assignment.endsWith(";")) {
-            return "Valid Statement.";
+            System.out.println("Valid Statement.");
+            return true;
         } else {
-            return "Error: Missing a semicolon.";
+            System.out.println("Error: Missing a semicolon.");
+            return false;
         }
     }
 
