@@ -8,9 +8,10 @@ public class GrammarApplications {
         System.out.println("------------------------------------------------------");
         System.out.println("| Welcome to the Assignment Statement Syntax Checker |");
         System.out.println("------------------------------------------------------");
-        System.out.print("Enter user input: ");
+        System.out.print("Assignment Statement to check: ");
         
         String assignment = scan.nextLine();
-        System.out.println("String: " + assignment);
+        System.out.println();
+        System.out.println("Assignment Statement: " + assignment);
     }
 }
