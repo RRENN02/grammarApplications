@@ -24,4 +24,38 @@ public class GrammarApplications {
             return "Error: Missing a semicolon.";
         }
     }
+    public static boolean intChecker(String val) {
+        try {
+            Integer.valueOf(val);
+            System.out.println(val + " is an integer");
+            return true;
+        } catch (NumberFormatException e) {
+            System.out.println(val + " is not an integer");
+            return false;
+        }
+    }
+
+    public static boolean decChecker(String val) {
+        try {
+            Double.valueOf(val);
+            System.out.println(val + " is a decimal");
+            return true;
+        } catch (NumberFormatException e) {
+            System.out.println(val + " is not a decimal");
+            return false;
+        }
+    }
+
+    public static boolean boolChecker(String val) {
+
+        if (val.equals("true") || val.equals("false")) {
+            System.out.println(val + " is a Boolean");
+            return true;
+        } else {
+            System.out.println(val + " is not a Boolean");
+            return false;
+        }
+    }
+
+    
 }
