@@ -11,7 +11,7 @@ public class GrammarApplications {
     private static String lexeme4;
     private static String lexeme5;
 
-    int lexemeCounter;
+    static int lexemeCounter;
 
      private static char[] letter = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
         'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
@@ -55,6 +55,7 @@ public class GrammarApplications {
     public static boolean semiColonChecker(String assignment) {
         if (assignment.endsWith(";")) {
             System.out.println("Valid Statement.");
+            lexemeCounter++;
             return true;
         } else {
             System.out.println("Error: Missing a semicolon.");
