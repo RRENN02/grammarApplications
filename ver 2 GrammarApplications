@@ -106,6 +106,16 @@ public class GrammarApplications {
         return false;
     }
 
+    //for char
+    public static boolean charChecker(String val) {
+        if(val.charAt(0) == '\'' && val.charAt(2) == '\''){
+            System.out.println("is a char");
+            return true;
+        }
+        System.out.println("is not a char");
+        return false;
+    }
+
     //for lexeme count
     public static void processLexemes(String input) {
         String[] lexemes = input.split(" ");
