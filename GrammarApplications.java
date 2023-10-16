@@ -57,5 +57,15 @@ public class GrammarApplications {
         }
     }
 
+    // for Strings
+    public static boolean stringChecker(String val) {
+        if(val.charAt(0) == '"' && val.charAt(val.length()-1) == '"'){
+            System.out.println("is a string");
+            return true;
+        }
+        System.out.println("is not a string");
+        return false;
+    }
+
     
 }
