@@ -1,0 +1,236 @@
+package grammarapplications;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class GrammarApplications {
+
+    private static String lexeme1;
+    private static String lexeme2;
+    private static String lexeme3;
+    private static String lexeme4;
+    private static String lexeme5;
+
+    static int lexemeCounter;
+    private static final char[] letter = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+        'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+    private static final char[] digit = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    String[] boolVal = {"true", "false"};
+    private static final String[] dataTypes = {"char", "int", "String", "float", "boolean", "double"};
+    private static final String[] resKeys = {"abstract", "assert", "boolean", "break", "byte", "case", "catch",
+        "char", "class", "const", "continue", "default", "do", "double", "else", "enum",
+        "extends", "final", "finally", "float", "for", "if", "goto", "implements", "import",
+        "instanceof", "interface", "int", "long", "native", "new", "package", "private",
+        "protected", "public", "return", "short", "static", "strictfp", "super", "switch", "synchronized",
+        "this", "throw", "throws", "transient", "try", "var", "void", "volatile", "while"};
+
+    private static final char[] specChars = {'~', '`', '!', '@', '#', '%', '^', '&', '*', '(', ')', ',', '.', '/', '<', '>',
+        '\\', '?', '|', ':', ';', '[', ']', '{', '}', '-', '=', '+', '\'', '\"', '$', '_'};
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+		System.out.println("------------------------------------------------------");
+        System.out.println("| Welcome to the Assignment Statement Syntax Checker |");
+        System.out.println("------------------------------------------------------");
+		System.out.println("Enter an assignment statement:");
+        String input = scanner.nextLine();
+
+        processLexemes(input);
+
+        try {
+            if (!checkFirstLexeme()) {
+                System.out.println("Error: variable declaration not allowed here.");
+                System.exit(0);
+            }
+
+            if (!checkSecondLexeme(lexeme2)) {
+                System.out.println("Error: Naming Convention");
+                System.exit(0);
+            }
+
+            if (!checkThirdLexeme(lexeme3)) {
+                System.out.println("Error: No assignment statement operator found \"=\"");
+                System.exit(0);
+            }
+
+            String firstLexeme = lexeme1.toLowerCase();
+            String fourthLexeme = lexeme4.toLowerCase().replace(";", "");
+
+            checkFourthLexeme(firstLexeme, fourthLexeme);
+
+        } catch (NullPointerException e) {
+            System.exit(0);
+        }
+
+    }
+
+    // For printing & separating lexemes
+    public static void processLexemes(String input) {
+
+        String[] lexemes = input.split(" ");
+        lexemeCounter = lexemes.length;
+
+        if (lexemeCounter != 4) {
+            System.out.println("Error: Invalid input. Please enter 5 lexemes separated by spaces.");
+        } else {
+
+            lexeme1 = lexemes[0];
+            lexeme2 = lexemes[1];
+            lexeme3 = lexemes[2];
+            lexeme4 = lexemes[3];
+            semiColonChecker(input);
+
+            System.out.println("Number of Lexemes: " + lexemeCounter);
+            System.out.println("Lexeme 1: " + lexeme1);
+            System.out.println("Lexeme 2: " + lexeme2);
+            System.out.println("Lexeme 3: " + lexeme3);
+            System.out.println("Lexeme 4: " + lexeme4.replace(";", ""));
+            System.out.println("Lexeme 5: " + lexeme5);
+        }
+    }
+
+    // For  checking 1st lexeme --> Data Type
+    public static boolean checkFirstLexeme() {
+        for (String dataType : dataTypes) {
+            if (lexeme1.equals(dataType)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // For checking 2nd lexeme --> Valid variable naming convention
+    public static boolean checkSecondLexeme(String lexeme) {
+        if (Arrays.asList(resKeys).contains(lexeme)) {
+            return false;
+        }
+
+        char firstChar = lexeme.charAt(0);
+        for (char digit : digit) {
+            if (firstChar == digit) {
+                return false;
+            }
+        }
+
+        if (lexeme.contains("_")) {
+            if (firstChar == '_') {
+                return false;
+            }
+            System.out.println("true");
+            return true;
+        }
+
+        for (char specChar : specChars) {
+            if (lexeme.contains(String.valueOf(specChar))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // For checking 3rd Lexeme --> Assignment operator "="
+    public static boolean checkThirdLexeme(String lexeme) {
+        return lexeme.equals("=");
+    }
+    
+    // For checking 4th Lexeme --> value matches data type
+    public static void checkFourthLexeme(String firstLexeme, String fourthLexeme) {
+        switch (firstLexeme) {
+            case "int":
+                intChecker(fourthLexeme);
+                break;
+            case "float":
+                decChecker(fourthLexeme);
+                break;
+            case "double":
+                decChecker(fourthLexeme);
+                break;
+            case "boolean":
+                boolChecker(fourthLexeme);
+                break;
+            case "char":
+                charChecker(fourthLexeme);
+                break;
+            case "string":
+                stringChecker(fourthLexeme);
+                break;
+            default:
+                System.out.println("Error: Invalid data type for assignment.");
+        }
+    }
+    
+    // for Semi Colon
+    public static boolean semiColonChecker(String assignment) {
+        if (assignment.endsWith(";")) {
+            lexeme5 = ";";
+            lexemeCounter++;
+            return true;
+        } else {
+            System.out.println("Error: Missing a semicolon.");
+            System.exit(0);
+            return false;
+        }
+    }
+
+    // for Integers
+    public static boolean intChecker(String val) {
+        try {
+            Integer.valueOf(val);
+            System.out.println(val + " is an integer");
+            return true;
+        } catch (NumberFormatException e) {
+            System.out.println(val + " is not an integer");
+            return false;
+        }
+    }
+
+    // for Decimals
+    public static boolean decChecker(String val) {
+        try {
+            Double.valueOf(val);
+            System.out.println(val + " is a decimal");
+            return true;
+        } catch (NumberFormatException e) {
+            System.out.println(val + " is not a decimal");
+            return false;
+        }
+    }
+
+    // for Booleans
+    public static boolean boolChecker(String val) {
+
+        if (val.equals("true") || val.equals("false")) {
+            System.out.println(val + " is a Boolean");
+            return true;
+        } else {
+            System.out.println(val + " is not a Boolean");
+            return false;
+        }
+    }
+
+    // for Strings
+   public static boolean stringChecker(String val) {
+        if (val.charAt(0) == '"' && val.charAt(val.length() - 1) == '"') {
+            System.out.println(val + " is a string");
+            return true;
+        }
+        System.out.println(val + " is not a string");
+        return false;
+    }
+
+    //for char
+    public static boolean charChecker(String val) {
+        if (val.charAt(0) == '\'' && val.charAt(2) == '\'') {
+            System.out.println(val + " is a char");
+            return true;
+        }
+        System.out.println(val + " is not a char");
+        return false;
+    }
+
+    
+
+}
